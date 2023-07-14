@@ -2,6 +2,7 @@ package swing_d;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,34 +29,12 @@ public class Window_D_Label_Circle extends JLabel {
 		this.width = width;
 		this.height = height;
 		setVisible(true);
-		setSize(width,height);
-		setBackground(color);
+		setPreferredSize(new Dimension(width, height));
 		setLocation(x, y);
-		setText(a);
-		setHorizontalAlignment(SwingConstants.CENTER);
-		
-		addMouseListener(new MouseListener() {
 
-			@Override
-			public void mouseClicked(MouseEvent e) {}
-
-			@Override
-			public void mousePressed(MouseEvent e) {}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {run.run();}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-
-			@Override
-			public void mouseExited(MouseEvent e) {}
+		addMouseListener(new MouseAdapter() {public void mouseReleased(MouseEvent e) {run.run();}});
 			
-		
-		});
-			
-
-		};
+	};
 
 		@Override
 	    protected void paintComponent(Graphics g) {

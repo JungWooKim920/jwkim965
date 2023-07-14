@@ -37,7 +37,7 @@ public class Window_D_panel_main extends JPanel {
 		setVisible(true);
 		setSize(width,height);
 		setLocation(x, y);		
-		setPreferredSize(new Dimension(width,height));
+		
 		setLayout(layout);
 		setOpaque(false); // 배경을 투명하게 설정
 	};

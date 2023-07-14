@@ -32,9 +32,7 @@ public class Window_D_panel_center extends JPanel {
 		this.color = color;
 		
 		setVisible(true);
-		setSize(width,height);
 		setLocation(x, y);		
-		setPreferredSize(new Dimension(width,height));
 		setLayout(layout);
 		setOpaque(false); // 배경을 투명하게 설정
 	};
@@ -48,11 +46,8 @@ public class Window_D_panel_center extends JPanel {
         graphics2d.setStroke(new BasicStroke(Window_interface_D.option.main_panel_center_border_setStroke));
         
         
-        addMouseListener(new MouseAdapter() {
-        	
-        	 //public void mouseClicked(MouseEvent e) {Window_interface_D.resize_relayout_();}
-        });
-        // 라운드 모양 그리기
+        addMouseListener(new MouseAdapter() {});
+ 
          
         if(Window_interface_D.option.main_panel_center_border_rownd) {
         	

@@ -10,8 +10,10 @@ public class Main_D {
 				
 			
 			try {
-				
-				Window_interface_D.lable_Add();
+				Window_interface_D.message_Add();
+				Window_interface_D.team_Add();
+				Window_interface_D.table_Add();
+				Window_interface_D.head_Add();
 				Window_interface_D.panel_Add();
 				Window_interface_D.diary_frame.setVisible(true);
 				

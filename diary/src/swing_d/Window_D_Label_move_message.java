@@ -38,7 +38,7 @@ public class Window_D_Label_move_message extends JLabel {
 		setHorizontalAlignment(SwingConstants.CENTER);
 		
 		addMouseListener(new MouseAdapter() {
-		    public void mousePressed(MouseEvent e) { }
+		    public void mousePressed(MouseEvent e) {run.run();}
 		    public void mouseEntered(MouseEvent e) {setCursor(Cursor.getPredefinedCursor(cursor));}
 		    public void mouseExited(MouseEvent e)  {setCursor(Cursor.getDefaultCursor());}
 		    public void mouseReleased(MouseEvent e) {}
@@ -52,27 +52,6 @@ public class Window_D_Label_move_message extends JLabel {
 		    public void mouseReleased(MouseEvent e) {}
 		});
 		
-		addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {}
-
-			@Override
-			public void mousePressed(MouseEvent e) {}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {run.run();}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			
-		
-		});
-			
-
 		};
 
 		@Override

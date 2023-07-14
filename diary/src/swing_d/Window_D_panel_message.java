@@ -11,14 +11,12 @@ import javax.swing.JPanel;
 
 public class Window_D_panel_message extends JPanel {
 
-	Color color;    
-
     int x_paint;
     int y_paint;
     int width;
     int height;
 	
-	Window_D_panel_message(Color color,int x,int y ,int width,int height){
+	Window_D_panel_message(int x,int y ,int width,int height){
 		
 		if(Window_interface_D.option.panel_auto_resize) {
 			
@@ -32,7 +30,7 @@ public class Window_D_panel_message extends JPanel {
 		
 		this.width = width;
 		this.height = height;
-		this.color = color;
+	
 		setVisible(true);
 		setPreferredSize(new Dimension(width,height));
 		
@@ -57,20 +55,20 @@ public class Window_D_panel_message extends JPanel {
         
         if(Window_interface_D.option.message_panel_border_rownd) {
           	graphics2d.setColor(Window_interface_D.option.message_set_fill_color);
-            graphics2d.fillRoundRect(x_paint, y_paint, this.getPreferredSize().width- x_paint*2, this.getPreferredSize().height - y_paint *2  -10, Window_interface_D.option.message_panel_width_rownd, Window_interface_D.option.message_panel_height_rownd);
+            graphics2d.fillRoundRect(x_paint, y_paint, getWidth() - x_paint*2 -1, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height, Window_interface_D.option.message_panel_width_rownd, Window_interface_D.option.message_panel_height_rownd);
             
         	if(Window_interface_D.option.message_panel_border_layout){
         		graphics2d.setColor(Window_interface_D.option.message_set_layout_color); // 패널의 배경색 설정
-        		graphics2d.drawRoundRect(x_paint, y_paint, this.getPreferredSize().width- x_paint*2, this.getPreferredSize().height - y_paint *2  -10, Window_interface_D.option.message_panel_width_rownd, Window_interface_D.option.message_panel_height_rownd);
+        		graphics2d.drawRoundRect(x_paint, y_paint, getWidth() - x_paint*2 -1, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height, Window_interface_D.option.message_panel_width_rownd, Window_interface_D.option.message_panel_height_rownd);
         	}
         }
         else{
         	graphics2d.setColor(Window_interface_D.option.message_set_fill_color);
-            graphics2d.fillRect(x_paint, y_paint, this.getPreferredSize().width- x_paint*2, this.getPreferredSize().height - y_paint *2 -10);
+            graphics2d.fillRect(x_paint, y_paint, getWidth() - x_paint*2 -1, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height);
        	
         	if(Window_interface_D.option.message_panel_border_layout){
         		graphics2d.setColor(Window_interface_D.option.message_set_layout_color); // 패널의 배경색 설정
-        		graphics2d.drawRect(x_paint, y_paint, this.getPreferredSize().width- x_paint*2, this.getPreferredSize().height - y_paint *2 -10);
+        		graphics2d.drawRect(x_paint, y_paint, getWidth() - x_paint*2 -1, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height);
         	}
         }              
         

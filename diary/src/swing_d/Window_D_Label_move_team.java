@@ -50,27 +50,6 @@ public class Window_D_Label_move_team extends JLabel {
 		    
 		    public void mouseReleased(MouseEvent e) {}
 		});
-		
-		addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {}
-
-			@Override
-			public void mousePressed(MouseEvent e) {}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {run.run();}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			
-		
-		});
-			
 
 		};
 
