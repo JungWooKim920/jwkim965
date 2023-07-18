@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
@@ -59,14 +60,14 @@ public class Window_D_panel_table extends JPanel {
         if(Window_interface_D.option.table_panel_border_rownd) {
         	graphics2d.setColor(Window_interface_D.option.table_set_fill_color);
             graphics2d.fillRoundRect(x_paint, y_paint, 
-            		Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST)
+            		Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) + Window_interface_D.option.GetPanel(Window_interface_D.main_panel_center,BorderLayout.EAST)-1
             		, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height
             		, Window_interface_D.option.table_panel_width_rownd,Window_interface_D.option.table_panel_height_rownd);
         	
         	if(Window_interface_D.option.table_panel_border_layout) {
         		graphics2d.setColor(Window_interface_D.option.table_set_layout_color); // 패널의 배경색 설정
         		graphics2d.drawRoundRect(x_paint, y_paint,
-        				Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) 
+        				Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) + Window_interface_D.option.GetPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) -1
         				,Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height,
         				Window_interface_D.option.table_panel_width_rownd, Window_interface_D.option.table_panel_height_rownd);
         	}
@@ -74,13 +75,13 @@ public class Window_D_panel_table extends JPanel {
         else{
         	graphics2d.setColor(Window_interface_D.option.table_set_fill_color);
             graphics2d.fillRect(x_paint, y_paint,
-            		Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST)
+            		Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST)+ Window_interface_D.option.GetPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) -1
             		, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height);
         	
         	if(Window_interface_D.option.table_panel_border_layout) {
         		graphics2d.setColor(Window_interface_D.option.table_set_layout_color); // 패널의 배경색 설정
         		graphics2d.drawRect(x_paint, y_paint, 
-        				Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) 
+        				Window_interface_D.main_panel_center.getWidth()- x_paint*2 - Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.WEST) -Window_interface_D.option.isPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) + Window_interface_D.option.GetPanel(Window_interface_D.main_panel_center,BorderLayout.EAST) -1
         				, Window_interface_D.main_panel_center.getHeight() - y_paint *2 - Window_interface_D.option.head_panel_x - Window_interface_D.option.head_panel_height);
         	}
         }              

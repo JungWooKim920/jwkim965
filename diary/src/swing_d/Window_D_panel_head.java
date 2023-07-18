@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 public class Window_D_panel_head extends JPanel {
 
-	Color color;
 	Point initialClick;
 	
 	int x_paint;
@@ -23,7 +22,7 @@ public class Window_D_panel_head extends JPanel {
     int width;
     int height;
     
-	Window_D_panel_head(Color color, GridBagLayout Layout,int x, int y ,int width, int height){
+	Window_D_panel_head(GridBagLayout Layout,int x, int y ,int width, int height){
 		
 		if(Window_interface_D.option.panel_auto_resize) {
 		
@@ -37,7 +36,6 @@ public class Window_D_panel_head extends JPanel {
 		
 		this.width = width;
 		this.height = height;	
-		this.color = color;
 	
 		setVisible(true);
 		setSize(width,height);
@@ -50,7 +48,6 @@ public class Window_D_panel_head extends JPanel {
 			setLocation(x,y);
 		}	
 		
-		setBackground(color);
 		setLayout(Layout);
 		setOpaque(false); 
 		

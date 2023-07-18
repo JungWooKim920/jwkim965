@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
@@ -16,7 +17,7 @@ public class Window_D_panel_team extends JPanel {
     int width;
     int height;
 	
-	Window_D_panel_team(int x,int y ,int width , int height){
+	Window_D_panel_team(GridBagLayout Layout, int x,int y ,int width , int height){
 		
 		if(Window_interface_D.option.panel_auto_resize) {
 			
@@ -41,7 +42,7 @@ public class Window_D_panel_team extends JPanel {
 			setLocation(x,y);
 		}	
 		
-		setLayout(null);
+		setLayout(Layout);
 		setOpaque(false); // 배경을 투명하게 설정
 	};
 		

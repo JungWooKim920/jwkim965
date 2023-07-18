@@ -43,9 +43,11 @@ public interface Window_interface_D {
 	
 	}
 	
-	GridBagLayout GL = new GridBagLayout();
+	GridBagLayout GL_head 	 = new GridBagLayout();
+	GridBagLayout GL_team	 = new GridBagLayout();
+	
 
-	public static Window_D_panel_head diary_head 			= new Window_D_panel_head(new Color(255,255,255,0),	option.GL_head(GL),   option.head_panel_x, option.head_panel_y, size.resize_screen_width, option.head_panel_height);
+	public static Window_D_panel_head diary_head 			= new Window_D_panel_head(option.GL_head(GL_head),   option.head_panel_x, option.head_panel_y, size.resize_screen_width, option.head_panel_height);
 	
 	/*window header*/
 	public static Window_D_Label_Circle btn_x	 			= new Window_D_Label_Circle(new Runnable() {@Override public void run() {exit();}},new Color(255,255,255,0),"X", 0, 0, 32, 32);
@@ -73,20 +75,19 @@ public interface Window_interface_D {
 
 	public static Window_D_panel_table diary_table	 		= new Window_D_panel_table(option.table_panel_x, option.other_panel_margin,main_panel.getPreferredSize().width - option.table_panel_size - (option.table_panel_x_margin *2-3)  ,  size.resize_screen_height-option.other_panel_height);	
 	
-	
 	public static void table_Add(){
+		main_panel_center.add(diary_table,BorderLayout.CENTER);
 		
-		 main_panel_center.add(diary_table,BorderLayout.CENTER);
-		
+	diary_table.add(new CalendarMain());
 	}
 	
-	public static Window_D_panel_team diary_team 			= new Window_D_panel_team(option.team_panel_x, option.other_panel_margin, option.team_panel_size_fix, size.resize_screen_height-option.other_panel_height);
+	public static Window_D_panel_team diary_team 			= new Window_D_panel_team(option.GL_team(GL_team),option.team_panel_x, option.other_panel_margin, option.team_panel_size_fix, size.resize_screen_height-option.other_panel_height);
 	
 	public static void team_Add(){main_panel_center.add(diary_team,BorderLayout.WEST);}
 	
 	public static void team_hide() {
 		
-		
+		System.out.println(option.GetPanel(main_panel_center,BorderLayout.EAST));
 		
 		if (option.hasPanel(main_panel_center,BorderLayout.WEST)) {
 			main_panel_center.remove(diary_team);
@@ -115,8 +116,7 @@ public interface Window_interface_D {
 		main_panel_center.validate();
 		main_panel_center.repaint();
 
-		System.out.println(option.isPanel(main_panel_center,BorderLayout.EAST));
-		
+
 	}
 	
 	
@@ -164,8 +164,6 @@ public interface Window_interface_D {
 		
 		if(	diary_frame.getHeight() == size.resize_screen_height) {
 			
-			System.out.println(size.resize_screen_height);
-			System.out.println(diary_frame.getHeight());
 			diary_frame.setSize(1680,800);
 			main_panel.setSize(1680,800);
 			main_panel.revalidate();
@@ -181,8 +179,7 @@ public interface Window_interface_D {
 			diary_frame.repaint();
 		}
 		else {
-			System.out.println(size.resize_screen_height);
-			System.out.println(diary_frame.getHeight());
+
 			diary_frame.setExtendedState(diary_frame.MAXIMIZED_BOTH);
 		
 			diary_frame.setSize(size.resize_screen_width,size.resize_screen_height);

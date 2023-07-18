@@ -22,7 +22,7 @@ public class Init {
 	public int main_panel_width_rownd  = 10;
 	public int main_panel_height_rownd  = 10;	
 	public Color main_set_layout_color = new Color(120,180,180,0);
-	public Color main_set_fill_color = new Color(120,180,180,0);	
+	public Color main_set_fill_color = new Color(255,255,255,180);	
 	
 	public int main_panel_center_border_layout_x = 0;
 	public int main_panel_center_border_layout_y = 0;
@@ -86,59 +86,19 @@ public class Init {
 	public int team_panel_height_rownd  = 10;
 	public Color team_set_layout_color = new Color(0,0,0,255);
 	public Color team_set_fill_color = new Color(255,255,255,255);
+
+	/*팀의 레이아웃 기능임*/
+	public GridBagLayout GL_team(GridBagLayout GL) {
+		
+		GL.columnWidths = new int[]{20,20,20};
+		GL.rowHeights = new int[]{20,20,20,20,20};
+		GL.columnWeights = new double[]{0.0, 0.0, 1.0};
+		GL.rowWeights = new double[]{0.0,0.0,0.0};
+		return GL;
+	} 
 	
 	public int message_panel_x = 5;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public int table_panel_x_margin = message_panel_x + message_panel_x;//team_panel_x + 
-	
-	
-	
-	
-	
-	
-	
-	public int other_panel_margin = 0;
-	public int other_panel_height = head_panel_height - other_panel_margin;
-	public int other_border_layout_width = 5;
-	public int other_border_layout_height = 0;
-	
-	
 	public int message_panel_size_fix = 200;
-	public int table_panel_size = team_panel_size_fix + message_panel_size_fix;
-	
-	public boolean resize_line_visible = false;
-	public boolean mainframe_auto_size = true;
-	
-	
-	public boolean head_move_icon_layout = false;
-	public boolean head_move_icon_rownd = true;
-	public Color head_move_icon_color = new Color(180,255,255,180);	
-
-	
-	public boolean team_move_icon_layout = false;
-	public boolean team_move_icon_rownd = true;
-	public Color team_move_icon_fill_color = new Color(120,255,255,210);	
-	public Color team_move_icon_layout_color = new Color(0,0,0,180);	
-	public float team_move_icon_setStroke = 2.0f;
-	
 	public boolean message_panel_border_layout = true;
 	public boolean message_panel_border_rownd = true;
 	public float message_panel_border_setStroke = 1.0f;
@@ -147,11 +107,29 @@ public class Init {
 	public Color message_set_layout_color = new Color(0,0,0,255);
 	public Color message_set_fill_color = new Color(255,255,255,255);	
 	
+	/*하단은 정리되지 못한 라벨임*/
+	public int table_panel_x_margin = message_panel_x + message_panel_x;//team_panel_x + 
+	public int other_panel_margin = 0;
+	public int other_panel_height = head_panel_height - other_panel_margin;
+	public int table_panel_size = team_panel_size_fix + message_panel_size_fix;
+	
+	public boolean resize_line_visible = false;
+	public boolean mainframe_auto_size = true;
+	
+	public boolean head_move_icon_layout = false;
+	public boolean head_move_icon_rownd = true;
+	public Color head_move_icon_color = new Color(180,255,255,180);	
+
+	public boolean team_move_icon_layout = false;
+	public boolean team_move_icon_rownd = true;
+	public Color team_move_icon_fill_color = new Color(120,255,255,210);	
+	public Color team_move_icon_layout_color = new Color(0,0,0,180);	
+	public float team_move_icon_setStroke = 2.0f;
+	
 	public boolean message_move_icon_layout = false;
 	public boolean message_move_icon_rownd = true;
 	public Color message_move_icon_color = new Color(180,255,255,180);	
 	public float message_move_icon_setStroke = 2.0f;
-	
 	
 	public boolean table_move_icon_layout = false;
 	public boolean table_move_icon_원그리기 = false;
@@ -160,7 +138,6 @@ public class Init {
 	public float table_move_icon_setStroke = 2.0f;
 	public int table_move_icon_width_rownd  = 10;
 	public int table_move_icon_height_rownd  = 10;
-
 
 	/*오토 사이즈를 사용하면 아래 사이즈로 정리됩니다.*/
 	public boolean panel_auto_resize = false;
@@ -186,6 +163,12 @@ public class Init {
 	public int[] size_option_8= {1128,634};
 	public int[] size_option_9= {1024,768};
 	public int[] size_option_10= {1024,768};
+	
+	
+	
+	
+	
+	
 	
 	public GridBagConstraints GL_label(GridBagConstraints label,int grid_x, int grid_y,int insert1,int insert2,int insert3,int insert4) {
 		label.insets = new Insets(insert1, insert2, insert3, insert4);
@@ -224,5 +207,23 @@ public class Init {
         return 0;	
 	}
 	
-	
+	public int GetPanel(Container container, String position) {
+        LayoutManager layout = container.getLayout();
+        
+        if (layout instanceof BorderLayout) {
+            BorderLayout borderLayout = (BorderLayout) layout;
+            Component component = borderLayout.getLayoutComponent(container, position);
+            
+            if (component == null) {return 0;}
+            else {component.getLocation().getX();}
+            
+            return message_panel_x;
+        }
+    
+        
+        return 0;	
+	}
+
+
+
 }
