@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+	
+	<th:block th:fragment="content">
+	
+	  <h1 class="mt-4">GuestBook List Page
+            <span>
+                <a th:href="@{/board/register}">
+                    <button type="button" class="btn btn-outline-primary">REGISTER
+                    </button>
+                </a>
+            </span>
+        </h1>
+		
+		<table class="table table=striped">
+			<thead>
+				<tr>
+					<th scope="col">
+						#
+					</th>
+					<th scope="col">
+						Title 
+					</th>
+					<th scope="col">
+						Writer
+					</th>
+					<th scope="col">
+						RegDate
+					</th>
+				</tr>
+			</thead>
+			
+			<!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
+			<tbody>
+				<tr th:each="dto : ${result.dtoList}">
+					<th scope="row">
+					<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
+						<a th:href="@{/board/read(bno=${dto.bno}, page=${result.page})}">[[${dto.bno}]]</a>	
+					</th>
+					<td>[[${dto.title}]]-----------[<b th:text="${dto.replyCount}"></b>]</td>
+					<td>[[${dto.writerName}]] <small>[[${dto.writerEmail}]]</small></td>
+					<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<ul class="pagination h-100 justify-content-center align-items-center">
+            <li class="page-item " th:if="${result.prev}">
+                <a class="page-link" th:href="@{/board/list(page= ${result.start -1}, type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
+            </li>
+
+            <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
+                <a class="page-link" th:href="@{/board/list(page = ${page}, type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword})}">
+                    [[${page}]]
+                </a>
+            </li>
+
+            <li class="page-item" th:if="${result.next}">
+                <a class="page-link" th:href="@{/board/list(page= ${result.end + 1}, type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword})}">Next</a>
+            </li>
+        </ul>
+        
+        <!-- list모달.txt의 내용을 아래에 붙이세요 -->
+        
+        
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:inline="javascript">
+
+       	 	var msg = [[${newBno}]];
+
+            console.log(msg);
+
+            if(msg){
+                $(".modal").modal();
+            }
+
+
+        </script>
+        
+        
+        
+        
+        
+        
+        
+        
+	</th:block>
+</th:block>

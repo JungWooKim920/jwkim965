@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">
+
+		<h1 class="mt-4">Board Read Page</h1>
+
+		<div class="form-group">
+			<label>Bno</label> <input type="text" class="form-control"
+				name="gno" th:value="${dto.bno}" readonly>
+		</div>
+
+		<div class="form-group">
+			<label>Title</label> <input type="text" class="form-control"
+				name="title" th:value="${dto.title}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Content</label>
+			<textarea class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
+		</div>
+		<div class="form-group">
+			<label>Writer</label> <input type="text" class="form-control"
+				name="writer" th:value="${dto.writerName}" readonly>
+		</div>
+		<div class="form-group">
+			<label>RegDate</label> <input type="text" class="form-control"
+				name="regDate"
+				th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"
+				readonly>
+		</div>
+		<div class="form-group">
+			<label>ModDate</label> <input type="text" class="form-control"
+				name="modDate"
+				th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}"
+				readonly>
+		</div>
+
+		<a
+			th:href="@{/board/modify(bno = ${dto.bno}, page=${requestDTO.page})}">
+			<button type="button" class="btn btn-primary">Modify</button>
+		</a>
+
+		<a
+			th:href="@{/board/list(page=${requestDTO.page} , type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
+			<button type="button" class="btn btn-info">List</button>
+		</a>
+
+		<div>
+			<div class="mt-4">
+				<h5>
+					<span class="badge badge-info addReply">댓글쓰기</span>
+				</h5>
+				<h5>
+					<span class="badge badge-secondary replyCount"> Reply Count
+						[[${dto.replyCount}]]</span>
+				</h5>
+			</div>
+			<div class="list-group replyList"></div>
+		</div>
+
+
+		<!-- Modal 시작.. -->
+		<div class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<input class="form-control" type="text" name="replyText"
+								placeholder="Reply Text...">
+						</div>
+						<div class="form-group">
+							<input class="form-control" type="text" name="replyer"
+								placeholder="Replyer"> <input type="hidden" name="rno">
+						</div>
+					</div>
+					<!-- 버튼들..제이쿼리로 제어한다.. -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger replyRemove">Remove</button>
+						<button type="button" class="btn btn-warning replyModify">Modify</button>
+						<button type="button" class="btn btn-primary replySave">Save</button>
+						<button type="button" class="btn btn-outline-secondary replyClose"
+							data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 모달 끝.. -->
+
+		<script th:inline="javascript">
+		$(document).ready(function(){
+			
+			var bno = [[${dto.bno}]];
+			
+			var listGroup = $(".replyList");
+			
+			$(".replyCount").click(function(){
+				
+				$.getJSON('/replies/board/' + bno, function(arr){
+					console.log(arr);
+				})//End getJSON
+			})//End Click..
+			
+		//댓글 추가 영역 일단비워둠..위에 선언됨..
+		function formatTime(str){
+			var date = new Date(str);
+			
+			return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+		}
+			
+		//특정 게실글의 댓글을 처리하는 함수.
+		function loadJSONData(){
+			$.getJSON('/replies/board/'+bno, function(arr){//call back 함수
+				console.log(arr);
+				
+				var str ="";
+				
+				$(".replyCount").html(" Reply Count " + arr.length);
+				//$.each() 메서드 : 첫번째 파라미터는 배열 또는 객체를, 두번쨰는 콜백함수를 받으며, 함수 파람으로는 인덱스와 값을 갖음..
+				//여기서는 arr 의 순차적 값을 나타낸다..즉 reply 객체..
+				/*
+				// 객체을 선언
+					var arr= [
+					    {title : '다음', url : 'http://daum.net'},
+					    {title : '네이버', url : 'http://naver.com'}
+					];
+					
+					// $.each() 메서드의 첫번째 매겨변수로 위에서 선언한 배열은 전달
+					$.each(arr, function (index, item) {
+					    // 두 번째 매개변수로는 콜백함수인데 콜백함수의 매개변수 중
+					    // 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고
+					    // 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미합니다.
+					
+					    var result = '';
+					
+					    result += index +' : ' + item.title + ', ' + item.url;
+					
+					    console.log(result);
+					
+					    // 0 : 다음, http://daum.net
+					    // 1 : 네이버, http://naver.com
+					
+					})
+				*/
+				$.each(arr, function(idx, reply){
+					console.log(reply);
+					console.log(idx);
+					
+					str += '    <div class="card-body" data-rno="'+reply.rno+'"><b>'+reply.rno +'</b>';
+                    str += '    <h5 class="card-title">'+reply.text+'</h5>';
+                    str += '    <h6 class="card-subtitle mb-2 text-muted">'+reply.replyer+'</h6>';
+                    str += '    <p class="card-text">'+ formatTime(reply.regDate) +'</p>';
+                    str += '    </div>';
+				});
+				listGroup.html(str);
+			});
+		}//End of loadJSONData();
+		
+		$(".replyCount").click(function(){
+			loadJSONData();
+		});//End of Click
+		
+		
+		//모달 제어하기..
+		var modal = $(".modal");
+		//일단 테스트모 모두 보여주기..
+		//modal.modal("show");
+		
+		$(".addReply").click(function(){
+			modal.modal("show");
+			
+			//댓글 입력 하는 부분 초기화 시키기..
+			$('input[name="replyText"]').val('');
+			$('input[name="replyer"]').val('');
+			
+			//반드시 .btn 사이에 공백 하나 줄것!!!!!!
+			$('.modal-footer .btn').hide();
+			$('.replySave, .replyClose').show();
+		});
+		
+		//댓글저장 클릭 이벤트 처리.
+		$('.replySave').click(function(){
+			
+			var reply = {
+				bno : bno,
+				text : $('input[name="replyText"]').val(),
+				replyer  : $('input[name="replyer"]').val()
+			}
+			console.log(reply);
+			/*
+			JSON.stringify() 메서드는 JavaScript 값이나 객체를 JSON 문자열로 변환합니다. 
+			선택적으로, replacer를 함수로 전달할 경우 변환 전 값을 변형할 수 있고, 
+			배열로 전달할 경우 지정한 속성만 결과에 포함합니다.
+			
+			아랜 예시 코드..
+			console.log(JSON.stringify({ x: 5, y: 6 }));
+			// Expected output: "{"x":5,"y":6}"
+
+			console.log(JSON.stringify([new Number(3), new String('false'), new Boolean(false)]));
+			// Expected output: "[3,"false",false]"
+
+			console.log(JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] }));
+			// Expected output: "{"x":[10,null,null,null]}"
+
+			console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
+			// Expected output: ""2006-01-02T15:04:05.000Z""
+
+			*/
+			$.ajax({
+				url : '/replies/',
+				method : 'post',
+				data : JSON.stringify(reply),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					
+					var newRno = parseInt(data);
+					
+					alert(newRno + " 번 댓글이 등록되었음.");
+					modal.modal('hide');
+					loadJSONData();
+				}
+			})
+		})//End of Save..
+		
+		//댓글 삭제 처리작업..위 댓글 뿌려주는 class 속성을 이용해서 작업..
+		//댓글 클릭하면 내용과 작성자를 모달에 띄우고, 삭제, 수정 버튼을 활성화 하는 작업
+		//내부에 rno 를 찾아서 바인딩한다.
+		$('.replyList').on("click", ".card-body",function(){
+			
+			//$(this).data("rno") --> 위 card-body 내에서 사용된 
+			//str += '    <div class="card-body" data-rno="'+reply.rno+'"><b>'+reply.rno +'</b>'; 이다.
+			
+			var rno = $(this).data("rno");
+			//alert(rno);
+			//alert($(this).find('.card-title').html());
+			
+			$("input[name='replyText']").val($(this).find('.card-title').html());
+			$("input[name='replyer']").val($(this).find('.card-subtitle').html());
+			$("input[name='rno']").val(rno);
+			
+			$(".modal-footer .btn").hide();
+			$(".replyRemove, .replyModify, .replyClose").show();
+			modal.modal('show');
+		})
+		
+		//삭제버튼 클릭시
+		$('.replyRemove').on("click", function(){
+			var rno = $("input[name='rno']").val();//모달창에 보이는 댓글번호는 hidden 처리됨
+			
+			//ajax 처리
+			$.ajax({
+				url : '/replies/' + rno,
+				method : 'delete',
+				success : function(result){
+					console.log("서버결과 : " + result);
+					if(result == "Success"){
+						alert("삭제 되었습니다.");
+						modal.modal('hide');
+						loadJSONData();
+					}
+				}
+			})
+		})
+		
+		
+		//수정 이벤트 처리 및 ajax 로 요청 보내기
+		$(".replyModify").click(() => {
+			//삭제 대상인 rno 얻기 
+			let rno = $("input[name='rno']").val();
+			
+			//Json 으로 수정데이터를 보내야 하는데, json 으로 데이터를 생성해야 함
+			let reply ={
+					rno : rno,
+					bno : bno,
+					text : $('input[name="replyText"]').val(),
+					replyer : $('input[name="replyer"]').val()
+			}
+			
+			console.log(reply);
+			
+			$.ajax({
+				//보낼URL key : value, method, data 형식(JSON.stringify(json데이터))
+				//contentType : 'application/json; charset=utf-8'
+				//서버의 응답 결과 시 처리
+				//응답속성으로 success : fail(error) : 콜백정의
+				url : '/replies/' + rno, 
+				method : 'put',
+				data : JSON.stringify(reply),
+				contentType : 'application/json; charset=utf-8',
+				success : (res) => {
+					console.log("수정처리 결과 서버 메세지 : " + res);
+					
+					if(res == 'Success'){
+						alert("댓글이 수정됨");
+						modal.modal('hide');//기존 모달창 감추기
+						loadJSONData();
+					}
+				}
+			});
+		})
+		
+		
+		
+		
+		
+		
+		
+	});//End of docuReady..
+		
+		
+		
+        </script>
+
+
+	</th:block>
+
+</th:block>

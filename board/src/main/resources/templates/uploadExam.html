@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>파일 업로드 페이지</title>
+</head>
+<body>
+	<h1>파일 업로드 페이지</h1>
+	<input name="upFiles" type="file" multiple>
+	<button class="uploadBtn">업로드하기</button>
+
+	<!-- 여기에는 업로드 후 리턴되는 서버의 이미지 보기 링크를 View 하는 DIV 선언 -->
+	<div class="uploadResult">
+	</div>
+	
+	
+	<!--  	
+	<form method="post" enctype="multipart/form-data" action="/uploadajax">
+		<input type="file" name="upFiles" multiple>
+		<input type="submit">
+	</form> 
+	-->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+	<script>
+		function showUploadImg(arr) {
+			console.log(arr);
+			
+			let div = $('.uploadResult');
+			
+			for(let i = 0 ; i<arr.length; i++){
+				div.append("<img src='/display?fileName=" + arr[i].imageURL +"'>");
+			}
+			
+		}
+	
+	
+	
+		$('.uploadBtn').click(() => {
+			let formData = new FormData();
+			let inputFile = $('input[name="upFiles"]');
+			
+			let files = inputFile[0].files;
+			
+			for(let i = 0; i<files.length; i++) {
+				console.log(files[i]);
+				formData.append("upFiles", files[i]);
+			}
+			
+		
+			//ajax 를 이용해서 서버에 파일을 전송할게요.
+			$.ajax({
+				url : '/uploadajax',
+				processData : false, //반드시 false
+				contentType : false, //반드시
+				data : formData,
+				type : 'POST', 
+				dataType : 'json',
+				success : (result)=>{
+						showUploadImg(result);
+						console.log("서버의 업로드 처리 결과 : " + result);
+				},
+				error : (result) => {
+					console.log("업로드 fail... 예외 내용 : " + result);
+				}
+			});
+			
+		});
+		
+
+		
+		
+		
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
